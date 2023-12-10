@@ -2,6 +2,10 @@
 import styled from 'styled-components';
 import Transaction from '../types';
 
+interface StatusSpanProps {
+	status: string;
+}
+
 // Create a styled table
 const StyledTable = styled.table`
   width: 100%;
@@ -44,7 +48,7 @@ const StyledTd = styled.td`
 `;
 
 // Create a styled span for the status
-const StatusSpan = styled.span`
+const StatusSpan = styled.span<StatusSpanProps>`
   color:'#1A1D1F';
 	background-color: ${(props) => (props.status === 'Completed' ? '#60CA57' : '#6F767E')};
   font-weight: bold;
