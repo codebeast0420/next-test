@@ -1,7 +1,4 @@
 'use client'
-
-import { useEffect, useState } from 'react';
-// Import styled-components and create styles for the table
 import styled from 'styled-components';
 import Transaction from '../types';
 
@@ -48,33 +45,16 @@ const StyledTd = styled.td`
 
 // Create a styled span for the status
 const StatusSpan = styled.span`
-  color: ${(props) => (props.status === 'Completed' ? 'green' : 'red')};
+  color:'#1A1D1F';
+	background-color: ${(props) => (props.status === 'Completed' ? '#60CA57' : '#6F767E')};
   font-weight: bold;
+	padding: 5px;
+	border-radius: 4px;
 `;
 
 // Next.js component for the table
 
-const TransactionsTable: React.FC = ({
-	searchParams,
-} : {
-	searchParams?: {
-		query?: string;
-		page?: string;
-	}
-}) => {
-	const [transactions, setTransactions] = useState<Transaction[]>([]);
-
-	useEffect(() => {
-		async function fetchData() {
-			const res = await fetch('https://theseus-staging.lithium.ventures/api/v1/analytics/tech-test/payouts');
-			const data = await res.json();
-			const result: Transaction[] = data.data;
-			setTransactions(result);
-			console.log(data);
-		}
-
-		fetchData();
-	}, []);
+const TransactionsTable: React.FC<{ transactions: Transaction[] }> = ({ transactions }) => {
 
 	return (
 		<StyledTable>

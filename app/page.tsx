@@ -2,8 +2,47 @@
 
 import styled from 'styled-components'
 import TransactionsTable from './components/PayoutTbl'
+import Search from './components/Search'
+import Pagination from './components/Pagination'
+import Transaction from './types'
+import { useState, useEffect } from 'react'
+import Loader from './components/Loader'
 
-export default function Home() {
+
+export default function Home({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+    per_page?: string;
+    term?: string;
+  }
+}) {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [isLoading, setLoading] = useState<boolean>(true);
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 1;
+  const currentPerPage = Number(searchParams?.per_page) || 10;
+  const currentQuery = searchParams?.query || '';
+
+  useEffect(() => {
+    console.log('current page', currentPage);
+    setLoading(true);
+    async function fetchData() {
+      const res = await fetch(`https://theseus-staging.lithium.ventures/api/v1/analytics/tech-test/payouts?page=${currentPage}&limit=${currentPerPage}&query=${currentQuery}`);
+      const data = await res.json();
+      const result: Transaction[] = data.data;
+      setTotalPages(Math.ceil(data.metadata.totalCount / currentPerPage));
+      setTransactions(result);
+      console.log(data);
+      setLoading(false);
+    }
+
+    fetchData();
+  }, [currentPage, currentPerPage, currentQuery]);
+
   return (
     <MainLayout>
       <Title>Payouts</Title>
@@ -12,7 +51,16 @@ export default function Home() {
           <HistoryTag />
           Payout History
         </HistoryTItle>
-        <TransactionsTable />
+        <IndexLayout>
+          <Search placeholder='Search Payouts...' />
+          <Pagination totalPages={totalPages} />
+        </IndexLayout>
+        {isLoading && (
+          <Loader />
+        )}
+        {!isLoading && (
+          <TransactionsTable transactions={transactions} />
+        )}
       </PayoutHistory>
     </MainLayout>
   )
@@ -20,8 +68,9 @@ export default function Home() {
 
 const MainLayout = styled.div`
   background: white;
-  padding: 0 8vw;
-  height: 100vh;
+  padding: 0 8vw 100px;
+  padding-top: 100px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,14 +79,19 @@ const MainLayout = styled.div`
     gap: 20px;
   }
 `
-
+const IndexLayout = styled.div`
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+  @media (max-width: 762px) {
+    flex-direction: column;
+    gap: 10px;
+  }
+`
 const Title = styled.h2`
-  font-size: 3vw;
+  font-size: 35px;
   color: black;
   font-weight: bold;
-  @media (max-width: 768px) {
-    font-size: 20px;
-  }
 `
 
 const PayoutHistory = styled.div`
@@ -48,14 +102,12 @@ const PayoutHistory = styled.div`
 `
 
 const HistoryTItle = styled.div`
-  font-size: 2.2vw;
+  font-size: 25px;
   font-weight: bold;
   display: flex;
   align-items: center;
   gap: 10px;
-  @media (max-width: 768px) {
-    font-size: 15px;
-  }
+  height: 45px;
 `
 
 const HistoryTag = styled.div`
