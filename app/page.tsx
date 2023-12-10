@@ -1,95 +1,67 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client'
+
+import styled from 'styled-components'
+import TransactionsTable from './components/PayoutTbl'
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <MainLayout>
+      <Title>Payouts</Title>
+      <PayoutHistory>
+        <HistoryTItle>
+          <HistoryTag />
+          Payout History
+        </HistoryTItle>
+        <TransactionsTable />
+      </PayoutHistory>
+    </MainLayout>
   )
 }
+
+const MainLayout = styled.div`
+  background: white;
+  padding: 0 8vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 50px;
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
+`
+
+const Title = styled.h2`
+  font-size: 3vw;
+  color: black;
+  font-weight: bold;
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+`
+
+const PayoutHistory = styled.div`
+  padding-left: 2vw;
+  color: black;
+  display: flex;
+  flex-direction: column;
+`
+
+const HistoryTItle = styled.div`
+  font-size: 2.2vw;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+`
+
+const HistoryTag = styled.div`
+  display: block;
+  width: 20px;
+  background:#999DFF;
+  height: 90%;
+  border-radius: 4px;
+`
