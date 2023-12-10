@@ -16,7 +16,6 @@ export default function Home({
     query?: string;
     page?: string;
     per_page?: string;
-    term?: string;
   }
 }) {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -28,10 +27,8 @@ export default function Home({
   const currentQuery = searchParams?.query || '';
 
   useEffect(() => {
-    console.log('current page', currentPage);
     setLoading(true);
     const TargetURL = currentQuery === '' ? 'payouts' : 'search';
-    console.log(`https://theseus-staging.lithium.ventures/api/v1/analytics/tech-test/${TargetURL}?page=${currentPage}&limit=${currentPerPage}`);
     async function fetchData() {
       const res = await fetch(`https://theseus-staging.lithium.ventures/api/v1/analytics/tech-test/${TargetURL}?page=${currentPage}&limit=${currentPerPage}&query=${currentQuery}`);
       const data = await res.json();

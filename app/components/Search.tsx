@@ -12,6 +12,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
 	const createPageURL = (term: string) => {
 		const params = new URLSearchParams(searchParams);
 		params.set('query', term);
+		if (term === '') params.delete('query');
 		return `${pathname}?${params.toString()}`;
 	};
 
