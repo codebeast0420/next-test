@@ -29,19 +29,24 @@ const StyledTr = styled.tr`
     background-color: #f9f9f9;
   }
 	padding-left: 10px;
+	& > *:first-child {
+    color:#6F767E;
+  }
 `;
 
 // Create a styled table header cell
 const StyledTh = styled.th`
   text-align: left;
   padding: 15px;
-	font-size: 15px;
+	font-size: 13px;
+	font-weight: 500;
 `;
 
 // Create a styled table data cell
 const StyledTd = styled.td`
   text-align: left;
   padding: 15px;
+	font-weight: 600;
 	@media (max-width: 396px) {
 		font-size: 10px;
 	}
@@ -49,9 +54,8 @@ const StyledTd = styled.td`
 
 // Create a styled span for the status
 const StatusSpan = styled.span<StatusSpanProps>`
-  color:'#1A1D1F';
-	background-color: ${(props) => (props.status === 'Completed' ? '#60CA57' : '#6F767E')};
-  font-weight: bold;
+  color:#1A1D1F;
+	background-color: ${(props) => (props.status === 'Completed' ? '#60CA57' : 'rgba(111, 118, 126, 0.4)')};
 	padding: 5px;
 	border-radius: 4px;
 `;

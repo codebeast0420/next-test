@@ -16,10 +16,19 @@ export default function Search({ placeholder }: { placeholder: string }) {
 		return `${pathname}?${params.toString()}`;
 	};
 
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      // If the "Enter" key is pressed, navigate to the specified href
+      window.location.href = createPageURL(term);
+    }
+  };
+
+
 	return (
 		<SearchContainer>
 			<SearchInput
 				placeholder={placeholder}
+				onKeyDown={handleKeyDown}
 				onChange={(e) => {
 					setTerm(e.target.value);
 				}}
@@ -32,11 +41,13 @@ export default function Search({ placeholder }: { placeholder: string }) {
 }
 
 
-const SearchBtn = ({ href }: { href: string }) => (
-	<Confirm>
-		<Link href={href}><MagnifyingGlassIcon /></Link>
-	</Confirm>
-)
+const SearchBtn = ({ href }: { href: string }) => {
+	return (
+		<Confirm>
+			<Link href={href}><MagnifyingGlassIcon /></Link>
+		</Confirm>
+	)
+}
 // Styled components for each element
 const SearchContainer = styled.div`
   position: relative;
@@ -50,7 +61,7 @@ const Confirm = styled.div`
 	color: white;
 	margin-left: 2px;
 	text-align: center;
-	padding: 5px;
+	padding: 10px;
 	display: flex;
 	border-radius: 4px;
 	justify-content: center;
@@ -59,8 +70,8 @@ const Confirm = styled.div`
 		align-items: center;
 
 		svg {
-			width: 30px;
-			height: 30px;
+			width: 20px;
+			height: 20px;
 		}
 	}
 `

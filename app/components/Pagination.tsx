@@ -187,6 +187,9 @@ const PaginationArrowContainer = styled.div<PaginationArrowContainerProps>`
   border: 1px solid #e5e7eb;
   margin-right: ${(props) => (props.direction === 'left' ? '0.5rem' : '0')};
   margin-left: ${(props) => (props.direction === 'right' ? '0.5rem' : '0')};
+	svg {
+		width: 20px;
+	}
 `;
 
 const PerPageSelect = styled.select`
