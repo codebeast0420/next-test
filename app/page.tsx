@@ -22,7 +22,7 @@ export default function Home({
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [isLoading, setLoading] = useState<boolean>(true);
-  const query = searchParams?.query || '';
+
   const currentPage = Number(searchParams?.page) || 1;
   const currentPerPage = Number(searchParams?.per_page) || 10;
   const currentQuery = searchParams?.query || '';
@@ -30,11 +30,14 @@ export default function Home({
   useEffect(() => {
     console.log('current page', currentPage);
     setLoading(true);
+    const TargetURL = currentQuery === '' ? 'payouts' : 'search';
+    console.log(`https://theseus-staging.lithium.ventures/api/v1/analytics/tech-test/${TargetURL}?page=${currentPage}&limit=${currentPerPage}`);
     async function fetchData() {
-      const res = await fetch(`https://theseus-staging.lithium.ventures/api/v1/analytics/tech-test/payouts?page=${currentPage}&limit=${currentPerPage}&query=${currentQuery}`);
+      const res = await fetch(`https://theseus-staging.lithium.ventures/api/v1/analytics/tech-test/${TargetURL}?page=${currentPage}&limit=${currentPerPage}&query=${currentQuery}`);
       const data = await res.json();
-      const result: Transaction[] = data.data;
-      setTotalPages(Math.ceil(data.metadata.totalCount / currentPerPage));
+      const result: Transaction[] = data.data ? data.data : data;
+      const totalCount = data.metadata ? data.metadata.totalCount : data.length;
+      setTotalPages(Math.ceil(totalCount / currentPerPage));
       setTransactions(result);
       console.log(data);
       setLoading(false);
@@ -83,7 +86,7 @@ const IndexLayout = styled.div`
   margin-top: 15px;
   display: flex;
   justify-content: space-around;
-  @media (max-width: 762px) {
+  @media (max-width: 982px) {
     flex-direction: column;
     gap: 10px;
   }
