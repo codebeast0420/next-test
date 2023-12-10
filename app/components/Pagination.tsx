@@ -6,12 +6,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface PaginationArrowContainerProps {
-	isDisabled: boolean;
+	$isDisabled: boolean;
 	direction: 'left' | 'right';
 }
 
 interface PaginationNumberContainerProps {
-	isActive: boolean;
+	$isActive: boolean;
 	position: 'first' | 'last' | 'middle' | 'single' | undefined;
 }
 
@@ -118,12 +118,12 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
 
 function PaginationNumber({ page, href, isActive, position }: { page: number | string; href: string; position?: 'first' | 'last' | 'middle' | 'single'; isActive: boolean; }) {
 	return isActive || position === 'middle' ? (
-		<PaginationNumberContainer isActive={isActive} position={position}>
+		<PaginationNumberContainer $isActive={isActive} position={position}>
 			{page}
 		</PaginationNumberContainer>
 	) : (
 		<Link href={href}>
-			<PaginationNumberContainer isActive={isActive} position={position}>
+			<PaginationNumberContainer $isActive={isActive} position={position}>
 				{page}
 			</PaginationNumberContainer>
 		</Link>
@@ -132,12 +132,12 @@ function PaginationNumber({ page, href, isActive, position }: { page: number | s
 
 function PaginationArrow({ href, direction, isDisabled }: { href: string; direction: 'left' | 'right'; isDisabled: boolean; }) {
 	return isDisabled ? (
-		<PaginationArrowContainer direction={direction} isDisabled={isDisabled}>
+		<PaginationArrowContainer direction={direction} $isDisabled={isDisabled}>
 			{direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />}
 		</PaginationArrowContainer>
 	) : (
 		<Link href={href}>
-			<PaginationArrowContainer direction={direction} isDisabled={isDisabled}>
+			<PaginationArrowContainer direction={direction} $isDisabled={isDisabled}>
 				{direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />}
 			</PaginationArrowContainer>
 		</Link>
@@ -161,15 +161,15 @@ const PaginationNumberContainer = styled.div<PaginationNumberContainerProps>`
   justify-content: center;
   font-size: 0.875rem;
   border: 1px solid #e5e7eb;
-  background-color: ${(props) => (props.isActive ? '#3b82f6' : 'transparent')};
-  color: ${(props) => (props.isActive ? 'white' : 'black')};
+  background-color: ${(props) => (props.$isActive ? '#3b82f6' : 'transparent')};
+  color: ${(props) => (props.$isActive ? 'white' : 'black')};
   border-radius: ${(props) => {
 		if (props.position === 'first' || props.position === 'single') return '0.375rem 0 0 0.375rem';
 		if (props.position === 'last') return '0 0.375rem 0.375rem 0';
 		return 'none';
 	}};
   &:hover {
-    background-color: ${(props) => (!props.isActive && props.position !== 'middle' ? '#f3f4f6' : 'transparent')};
+    background-color: ${(props) => (!props.$isActive && props.position !== 'middle' ? '#f3f4f6' : 'transparent')};
 		color: black;
   }
 `;
@@ -181,9 +181,9 @@ const PaginationArrowContainer = styled.div<PaginationArrowContainerProps>`
   align-items: center;
   justify-content: center;
   border-radius: 0.375rem;
-	background-color: ${(props) => (props.isDisabled ? 'transparent' : '#f3f4f6')};
-	color: ${(props) => (props.isDisabled ? '#d1d5db' : 'black')};
-	pointer-events: ${(props) => (props.isDisabled ? 'none' : 'auto')};
+	background-color: ${(props) => (props.$isDisabled ? 'transparent' : '#f3f4f6')};
+	color: ${(props) => (props.$isDisabled ? '#d1d5db' : 'black')};
+	pointer-events: ${(props) => (props.$isDisabled ? 'none' : 'auto')};
   border: 1px solid #e5e7eb;
   margin-right: ${(props) => (props.direction === 'left' ? '0.5rem' : '0')};
   margin-left: ${(props) => (props.direction === 'right' ? '0.5rem' : '0')};
