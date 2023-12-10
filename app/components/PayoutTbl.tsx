@@ -67,6 +67,7 @@ const TransactionsTable: React.FC<{ transactions: Transaction[] }> = ({ transact
 					<StyledTh>Date & Time</StyledTh>
 					<StyledTh>Status</StyledTh>
 					<StyledTh>Value</StyledTh>
+					<StyledTh>User</StyledTh>
 				</SortTr>
 			</StyledThead>
 			<tbody>
@@ -88,6 +89,7 @@ const TransactionsTable: React.FC<{ transactions: Transaction[] }> = ({ transact
 							</StatusSpan>
 						</StyledTd>
 						<StyledTd>{transaction.value}</StyledTd>
+						<StyledTd>{transaction.username}</StyledTd>
 					</StyledTr>
 				))}
 			</tbody>
