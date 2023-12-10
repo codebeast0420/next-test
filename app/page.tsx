@@ -35,8 +35,8 @@ export default function Home({
     async function fetchData() {
       const res = await fetch(`https://theseus-staging.lithium.ventures/api/v1/analytics/tech-test/${TargetURL}?page=${currentPage}&limit=${currentPerPage}&query=${currentQuery}`);
       const data = await res.json();
-      const result: Transaction[] = data.data ? data.data : data;
-      const totalCount = data.metadata ? data.metadata.totalCount : data.length;
+      const result: Transaction[] = currentQuery === '' ? data.data : data;
+      const totalCount = currentQuery === '' ? data.metadata.totalCount : data.length;
       setTotalPages(Math.ceil(totalCount / currentPerPage));
       setTransactions(result);
       console.log(data);
