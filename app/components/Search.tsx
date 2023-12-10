@@ -8,6 +8,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
 	const searchParams = useSearchParams();
 	const pathname = usePathname();
 	const [term, setTerm] = useState<string>(searchParams.get('term') || '');
+	const router = useRouter();
 
 	const createPageURL = (term: string) => {
 		const params = new URLSearchParams(searchParams);
@@ -17,11 +18,10 @@ export default function Search({ placeholder }: { placeholder: string }) {
 	};
 
 	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter') {
-      // If the "Enter" key is pressed, navigate to the specified href
-      window.location.href = createPageURL(term);
-    }
-  };
+		if (event.key === 'Enter') {
+			router.push(createPageURL(term))
+		}
+	};
 
 
 	return (
