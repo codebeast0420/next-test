@@ -47,8 +47,8 @@ const StyledTd = styled.td`
   text-align: left;
   padding: 15px;
 	font-weight: 600;
-	@media (max-width: 396px) {
-		font-size: 10px;
+	@media (max-width: 650px) {
+		font-size: 12px;
 	}
 `;
 
