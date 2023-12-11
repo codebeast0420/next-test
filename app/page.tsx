@@ -36,7 +36,6 @@ export default function Home({
       const totalCount = currentQuery === '' ? data.metadata.totalCount : data.length;
       setTotalPages(Math.ceil(totalCount / currentPerPage));
       setTransactions(result);
-      console.log(data);
       setLoading(false);
     }
 
