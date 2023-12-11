@@ -17,7 +17,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
 		return `${pathname}?${params.toString()}`;
 	};
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
 			router.push(createPageURL(term))
 		}
